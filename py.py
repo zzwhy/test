@@ -5,18 +5,18 @@ import time
 import redis
 
 
-tmp = input("请输入用户名:")
+Infervision = input("请输入限制时间的用户:")
 if __name__ == "__main__":
     try:
         conn=redis.StrictRedis(host='127.0.0.1')
-        conn.set('name',tmp)
-        conn.expire('name',10)   # 设置过期时间
-        for item in range(12):
+        conn.set('name',Infervision)
+        conn.expire('name',100)   # 对用户进行时间限制
+        for item in range(10):
             value=conn.get('name')
             if value != None:
                 print(value.decode('utf8'))
             else:
-                print('access denied.....')
+                print('您输入的用户已过期')
                 break
             time.sleep(2)
     except Exception as f:
